@@ -1,0 +1,56 @@
+<section class="form-wrapper" ngClass.lt-lg="fixedWidth">
+  <h2 class="title">Sign Up</h2>
+  <form fxLayout="column" fxLayoutAlign="center" fxLayoutGap="10px"
+        [formGroup]="signupForm"
+        (ngSubmit)="submit()"
+        novalidate>
+
+    <div fxLayout="row" fxLayout.lt-lg="column" fxLayoutGap="5px">
+      <mat-form-field hintLabel="Please, enter your first name" fxFlex.lg="1 0 calc(50% - 5)">
+        <input type="text" matInput placeholder="First name" formControlName="firstName">
+        <mat-icon matSuffix fxShow fxHide.gt-md>people</mat-icon>
+        <mat-error *ngIf="signupForm.controls.firstName.hasError('minlength')">
+          First name should be at least {{signupForm.controls.firstName.errors.minlength.requiredLength}} length
+        </mat-error>
+        <mat-error *ngIf="signupForm.controls.firstName.hasError('required')">Field must not be empty</mat-error>
+      </mat-form-field>
+      <mat-form-field hintLabel="Please, enter your last name" fxFlex.lg="1 0 calc(50% - 5)">
+        <input type="text" matInput placeholder="Last name" formControlName="lastName">
+        <mat-icon matSuffix>people</mat-icon>
+        <mat-error *ngIf="signupForm.controls.lastName.hasError('required')">Field must not be empty</mat-error>
+      </mat-form-field>
+    </div>
+
+
+    <mat-form-field hintLabel="Please, enter your email">
+      <input type="email" matInput placeholder="Your email" formControlName="email">
+      <mat-icon matSuffix>email</mat-icon>
+      <mat-error *ngIf="signupForm.controls.email.hasError('required')">Field must not be empty</mat-error>
+      <mat-error>Email is invalid</mat-error>
+    </mat-form-field>
+    <mat-form-field hintLabel="Please, enter your password">
+      <input type="password"
+             #pwd
+             matInput
+             formControlName="password"
+             placeholder="Your password"
+             required
+      >
+      <mat-icon matSuffix>vpn_key</mat-icon>
+      <mat-hint align="end">{{pwd.value?.length || 0}} / {{minPwdLength}}</mat-hint>
+      <mat-error *ngIf="signupForm.controls.password.hasError('minlength')">Min length is 8</mat-error>
+      <mat-error *ngIf="signupForm.controls.password.hasError('required')">Should not be empty</mat-error>
+    </mat-form-field>
+    <button
+      type="submit"
+      mat-raised-button
+      color="primary"
+      [disabled]="signupForm.invalid"
+    >
+      Submit
+    </button>
+    <div class="navigate">
+      <a routerLink="/login">Already have an Account?</a>
+    </div>
+  </form>
+</section>
