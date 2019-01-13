@@ -1,20 +1,20 @@
-<section class="form-wrapper" ngClass.lt-lg="fixedWidth">
+<section class="form-wrapper" ngClass.lt-md="fixedWidth">
   <h2 class="title">Sign Up</h2>
   <form fxLayout="column" fxLayoutAlign="center" fxLayoutGap="10px"
         [formGroup]="signupForm"
         (ngSubmit)="submit()"
         novalidate>
 
-    <div fxLayout="row" fxLayout.lt-lg="column" fxLayoutGap="5px">
-      <mat-form-field hintLabel="Please, enter your first name" fxFlex.lg="1 0 calc(50% - 5)">
+    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="5px">
+      <mat-form-field hintLabel="Please, enter your first name" fxFlex.md="1 0 calc(50% - 5)">
         <input type="text" matInput placeholder="First name" formControlName="firstName">
-        <mat-icon matSuffix fxShow fxHide.gt-md>people</mat-icon>
+        <mat-icon matSuffix fxShow fxHide.gt-sm>people</mat-icon>
         <mat-error *ngIf="signupForm.controls.firstName.hasError('minlength')">
           First name should be at least {{signupForm.controls.firstName.errors.minlength.requiredLength}} length
         </mat-error>
         <mat-error *ngIf="signupForm.controls.firstName.hasError('required')">Field must not be empty</mat-error>
       </mat-form-field>
-      <mat-form-field hintLabel="Please, enter your last name" fxFlex.lg="1 0 calc(50% - 5)">
+      <mat-form-field hintLabel="Please, enter your last name" fxFlex.md="1 0 calc(50% - 5)">
         <input type="text" matInput placeholder="Last name" formControlName="lastName">
         <mat-icon matSuffix>people</mat-icon>
         <mat-error *ngIf="signupForm.controls.lastName.hasError('required')">Field must not be empty</mat-error>
