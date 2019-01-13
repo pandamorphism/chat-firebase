@@ -1,0 +1,13 @@
+.toolbar {
+  & ul>li {
+    & a {
+      &.active {
+        border-bottom: 3px solid whitesmoke;
+      }
+      text-decoration: none;
+      font-size: smaller;
+      color: white;
+    }
+    list-style: none;
+  }
+}

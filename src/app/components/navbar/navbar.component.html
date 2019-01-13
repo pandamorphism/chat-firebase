@@ -1,0 +1,25 @@
+<mat-toolbar color="primary" class="toolbar">
+  <button fxShow fxHide.gt-xs mat-icon-button> <!--(click)="snav.toggle()"-->
+    <mat-icon>menu</mat-icon>
+  </button>
+  <h1 class="example-app-name">The Chat</h1>
+  <ul class="links" *ngIf="false else loggedOut"
+      fxFlex="1 0 auto"
+      fxLayout fxLayoutAlign="flex-end"
+      fxLayoutGap="10px"
+  >
+    <li><a routerLink="/chat" routerLinkActive="active">Chat Rooms</a></li>
+    <li><a routerLink="/login" routerLinkActive="active">Logout</a></li>
+  </ul>
+</mat-toolbar>
+
+<ng-template #loggedOut>
+  <ul class="links"
+      fxFlex="1 0 auto"
+      fxLayout fxLayoutAlign="flex-end"
+      fxLayoutGap="10px"
+  >
+    <li><a routerLink="/login" routerLinkActive="active">Login</a></li>
+    <li><a routerLink="/signup" routerLinkActive="active">Sign Up</a></li>
+  </ul>
+</ng-template>

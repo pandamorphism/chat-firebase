@@ -9,12 +9,16 @@ import {RoutingModule} from './routing/routing.module';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MaterialModule} from './shared/material/material.module';
 import { SignupComponent } from './signup/signup.component';
+import { ChatComponent } from './pages/chat/chat.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    ChatComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
