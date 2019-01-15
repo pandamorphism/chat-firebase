@@ -1,0 +1,10 @@
+.chatroom-list-wrapper {
+  & .chatroom-list-item {
+    border-top: 1px solid lightgrey;
+    padding: 5px;
+    background: whitesmoke;
+  }
+  border-right: 2px solid whitesmoke;
+  height: 100%;
+  overflow-y: auto;
+}

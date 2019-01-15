@@ -11,6 +11,11 @@ import {MaterialModule} from './shared/material/material.module';
 import { SignupComponent } from './signup/signup.component';
 import { ChatComponent } from './pages/chat/chat.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { ChatInputComponent } from './pages/chat/components/chat-input/chat-input.component';
+import { ChatroomListComponent } from './pages/chat/components/chatroom-list/chatroom-list.component';
+import { ChatroomTitleBarComponent } from './pages/chat/components/chatroom-title-bar/chatroom-title-bar.component';
+import { ChatroomMessageComponent } from './pages/chat/components/chatroom-message/chatroom-message.component';
+import { ChatroomWindowComponent } from './pages/chat/components/chatroom-window/chatroom-window.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +23,12 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     LoginComponent,
     SignupComponent,
     ChatComponent,
-    NavbarComponent
+    NavbarComponent,
+    ChatInputComponent,
+    ChatroomListComponent,
+    ChatroomTitleBarComponent,
+    ChatroomMessageComponent,
+    ChatroomWindowComponent
   ],
   imports: [
     BrowserModule,
