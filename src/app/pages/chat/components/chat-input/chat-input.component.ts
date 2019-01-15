@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-chat-input',
@@ -6,10 +7,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./chat-input.component.scss']
 })
 export class ChatInputComponent implements OnInit {
+  inputForm: FormGroup;
 
-  constructor() { }
-
-  ngOnInit() {
+  constructor(private fb: FormBuilder) {
   }
 
+  ngOnInit() {
+    this.inputForm = this.fb.group({
+      messageInput: ['', [Validators.required]],
+    });
+  }
+
+  submit() {
+    console.log('sending message: %O', this.inputForm.controls.messageInput.value);
+    this.inputForm.reset();
+  }
 }

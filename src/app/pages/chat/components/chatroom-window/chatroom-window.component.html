@@ -1,15 +1,18 @@
 <section class="chat-window" fxLayout="column">
-  <app-chatroom-title-bar fxFlex="0 0 5%" title="Cat Facts"></app-chatroom-title-bar>
-  <div class="message-wrapper"
-       fxFlex="1 0 auto"
+  <app-chatroom-title-bar fxFlex="1 0 5%" title="Cat Facts"></app-chatroom-title-bar>
+  <div class="messages-wrapper"
+       fxFlex="1 1 80%"
        fxLayout="column"
        fxLayoutAlign="flex-end"
        fxLayoutGap="10px">
-    <ng-container *ngFor="let message of dummyData">
-      <app-chatroom-message [message]="message">
+    <div class="scrollable">
+      <ng-container *ngFor="let message of dummyData">
+        <app-chatroom-message [message]="message">
 
-      </app-chatroom-message>
-    </ng-container>
+        </app-chatroom-message>
+      </ng-container>
+    </div>
+
   </div>
   <app-chat-input fxFlex="0 0 10%"></app-chat-input>
 </section>

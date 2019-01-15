@@ -1,3 +1,5 @@
-<p>
-  chat-input works!
-</p>
+<div class="new-message-wrapper">
+  <form class="input-group" [formGroup]="inputForm" (ngSubmit)="submit()">
+    <input placeholder="Type your message here..." class="messageText" type="text" formControlName="messageInput">
+  </form>
+</div>

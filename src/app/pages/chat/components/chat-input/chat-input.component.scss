@@ -1,4 +1,20 @@
 :host {
+  height: 100%;
   border-top: 1px solid lightgrey;
   margin-top: 10px;
 }
+
+.new-message-wrapper {
+  height: 100%;
+  & form {
+    height: 100%;
+  }
+  & .messageText {
+    width: calc(100% - 35px);
+    height: calc(100% - 10px);
+    border: none;
+    outline: none;
+    padding-left: 30px;
+  }
+}
+
