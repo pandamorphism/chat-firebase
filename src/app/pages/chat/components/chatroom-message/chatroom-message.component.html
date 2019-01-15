@@ -1,3 +1,12 @@
-<p>
-  chatroom-message works!
-</p>
+<div fxLayout="row" fxLayoutGap="5px" class="message_wrapper">
+  <div fxLayout fxLayoutAlign="flex-start" fxFlex="1 0 90%" class="messageText">
+    <div class="avatar"><img src="{{message.sender.photoUrl}}"/></div>
+    <div fxLayout="column">
+      <div>
+        <span class="name">{{message.sender.firstName}} {{message.sender.lastName}}</span>
+        <span class="createdAt">{{message.createAt | date: 'medium'}}</span>
+      </div>
+      <div>{{message.message}}</div>
+    </div>
+  </div>
+</div>

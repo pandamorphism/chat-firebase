@@ -1,0 +1,32 @@
+.message_wrapper {
+  width: 95%;
+  margin-left: 10px;
+
+  & .avatar {
+    margin-right: 5px;
+
+    & img {
+      border-radius: 45px;
+      object-fit: cover;
+    }
+  }
+
+  & .name {
+    text-decoration: underline;
+    font-size: large;
+    font-weight: 500;
+  }
+
+  & .createdAt {
+    font-weight: lighter;
+    font-size: small;
+    margin-left: 5px;
+  }
+
+  & .messageText {
+    padding: 10px 10px;
+    background: lightcyan;
+    border-radius: 50px;
+  }
+
+}
