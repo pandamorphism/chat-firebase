@@ -1,8 +1,10 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Subscription} from 'rxjs';
+import {Subscription, timer} from 'rxjs';
 import {AlertService} from '../shared/services/alert.service';
+import {finalize, tap} from 'rxjs/operators';
+import {LoadingService} from '../shared/services/loading.service';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +19,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(private fb: FormBuilder,
               private router: Router,
               private route: ActivatedRoute,
-              // private loadingService: LoadingService,
+              private loadingService: LoadingService,
               private alertService: AlertService) {
   }
 
@@ -37,7 +39,11 @@ export class LoginComponent implements OnInit, OnDestroy {
     // TODO call the auth service
     const {email, password} = this.loginForm.value;
     console.log(`Email: ${email}, Password: ${password}`);
-    this.alertService.error('Your email or password were invalid, try again.');
+    this.loadingService.start();
+    timer(2000).pipe(
+      tap(_ => this.alertService.error('Your email or password were invalid, try again.')),
+      finalize(() => this.loadingService.stop())
+    ).subscribe();
     // this.router.navigate(['/chat']);
   }
 

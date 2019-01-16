@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Alert} from '../model/alert';
 import {Observable, Subject} from 'rxjs';
-import {MatSnackBar, MatSnackBarConfig} from '@angular/material';
+import {MatSnackBar} from '@angular/material';
 import {tap} from 'rxjs/operators';
 
 @Injectable({

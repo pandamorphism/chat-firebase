@@ -16,6 +16,7 @@ import { ChatroomListComponent } from './pages/chat/components/chatroom-list/cha
 import { ChatroomTitleBarComponent } from './pages/chat/components/chatroom-title-bar/chatroom-title-bar.component';
 import { ChatroomMessageComponent } from './pages/chat/components/chatroom-message/chatroom-message.component';
 import { ChatroomWindowComponent } from './pages/chat/components/chatroom-window/chatroom-window.component';
+import {NgxLoadingModule} from 'ngx-loading';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { ChatroomWindowComponent } from './pages/chat/components/chatroom-window
     FlexLayoutModule,
     RoutingModule,
     ReactiveFormsModule,
-    MaterialModule
+    MaterialModule,
+    NgxLoadingModule.forRoot({}),
   ],
   providers: [],
   bootstrap: [AppComponent]
