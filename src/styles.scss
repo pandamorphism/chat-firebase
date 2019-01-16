@@ -30,3 +30,13 @@ $chat-firebase-theme: mat-light-theme($chat-firebase-primary, $chat-firebase-acc
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+snack-bar-container {
+  &.danger {
+    & .mat-simple-snackbar {
+      justify-content: center;
+    }
+    background-color: crimson;
+    color: white;
+  }
+}

@@ -1,20 +1,29 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Subscription} from 'rxjs';
+import {AlertService} from '../shared/services/alert.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   loginForm: FormGroup;
+  private returnUrl: string;
+  private subscriptions: Subscription[] = [];
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(private fb: FormBuilder,
+              private router: Router,
+              private route: ActivatedRoute,
+              // private loadingService: LoadingService,
+              private alertService: AlertService) {
   }
 
   ngOnInit() {
     this.createForm();
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/chat';
   }
 
   createForm() {
@@ -28,10 +37,11 @@ export class LoginComponent implements OnInit {
     // TODO call the auth service
     const {email, password} = this.loginForm.value;
     console.log(`Email: ${email}, Password: ${password}`);
-    this.router.navigate(['/chat']);
+    this.alertService.error('Your email or password were invalid, try again.');
+    // this.router.navigate(['/chat']);
   }
 
-  print(password: any) {
-    console.log('Printing: %O', password);
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 }
