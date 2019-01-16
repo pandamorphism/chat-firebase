@@ -4,7 +4,7 @@ import {AuthService} from '../shared/services/auth.service';
 import {AlertService} from '../shared/services/alert.service';
 import {LoadingService} from '../shared/services/loading.service';
 import {Subscription} from 'rxjs';
-import {filter, finalize, tap} from 'rxjs/operators';
+import {filter, finalize, switchMap, tap} from 'rxjs/operators';
 import {IS_TRUE} from '../shared/misc/pure.utils';
 import {Router} from '@angular/router';
 
@@ -42,7 +42,7 @@ export class SignupComponent implements OnInit, OnDestroy {
     this.loadingService.start();
     this.subscriptions.push(this.auth.signup(this.signupForm.value).pipe(
       filter(IS_TRUE),
-      tap(_ => this.alertService.success('You`ve been logged in successfully.')),
+      switchMap(_ => this.auth.currentUser$.pipe(filter(user => !!user))),
       tap(_ => this.router.navigate(['/chat'])),
       finalize(() => this.loadingService.stop()),
     ).subscribe());

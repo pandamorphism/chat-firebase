@@ -1,5 +1,9 @@
 .toolbar {
   & ul>li {
+    &.logout {
+      cursor: pointer;
+      padding-top: 7px;
+    }
     & a {
       &.active {
         border-bottom: 3px solid whitesmoke;

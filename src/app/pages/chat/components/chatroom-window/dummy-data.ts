@@ -4,13 +4,13 @@ import {User} from '../../../../shared/model/user';
 export const bob: User = {
   firstName: 'Bob',
   lastName: 'Smith',
-  photoUrl: 'https://placekitten.com/90/90?image=1'
+  photoURL: 'https://placekitten.com/90/90?image=1'
 };
 
 export const steve: User = {
   firstName: 'Steve',
   lastName: 'Anderson',
-  photoUrl: 'https://placekitten.com/90/90?image=2'
+  photoURL: 'https://placekitten.com/90/90?image=2'
 };
 
 

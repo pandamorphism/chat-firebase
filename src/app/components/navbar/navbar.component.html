@@ -9,7 +9,10 @@
       fxLayoutGap="10px"
   >
     <li><a routerLink="/chat" routerLinkActive="active">Chat Rooms</a></li>
-    <li><a (click)="authService.logout()">Logout</a></li>
+    <li class="logout" matTooltip="Log out"
+        (click)="authService.logout()">
+      <mat-icon matSuffix>exit_to_app</mat-icon>
+    </li>
   </ul>
 </mat-toolbar>
 
