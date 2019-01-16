@@ -3,8 +3,11 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Subscription, timer} from 'rxjs';
 import {AlertService} from '../shared/services/alert.service';
-import {finalize, tap} from 'rxjs/operators';
+import {delay, filter, finalize, tap} from 'rxjs/operators';
 import {LoadingService} from '../shared/services/loading.service';
+import {AuthService} from '../shared/services/auth.service';
+import {IS_TRUE} from '../shared/misc/pure.utils';
+import {LoginModel} from '../shared/model/view.model';
 
 @Component({
   selector: 'app-login',
@@ -19,6 +22,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(private fb: FormBuilder,
               private router: Router,
               private route: ActivatedRoute,
+              private auth: AuthService,
               private loadingService: LoadingService,
               private alertService: AlertService) {
   }
@@ -36,15 +40,13 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   submit() {
-    // TODO call the auth service
-    const {email, password} = this.loginForm.value;
-    console.log(`Email: ${email}, Password: ${password}`);
     this.loadingService.start();
-    timer(2000).pipe(
-      tap(_ => this.alertService.error('Your email or password were invalid, try again.')),
+    this.subscriptions.push(this.auth.login(this.loginForm.value).pipe(
+      filter(IS_TRUE),
+      tap(_ => this.alertService.success('You`ve been logged in successfully.')),
+      tap(_ => this.router.navigate(['/chat'])),
       finalize(() => this.loadingService.stop())
-    ).subscribe();
-    // this.router.navigate(['/chat']);
+    ).subscribe());
   }
 
   ngOnDestroy(): void {

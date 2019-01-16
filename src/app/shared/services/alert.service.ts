@@ -26,4 +26,12 @@ export class AlertService {
   error(message: string) {
     this.alertsSubj$.next({text: message, type: 'danger'});
   }
+
+  info(message: string) {
+    this.alertsSubj$.next({text: message, type: 'info'});
+  }
+
+  success(message: string) {
+    this.alertsSubj$.next({text: message, type: 'success'});
+  }
 }

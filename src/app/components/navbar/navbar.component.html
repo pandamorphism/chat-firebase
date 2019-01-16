@@ -3,13 +3,13 @@
     <mat-icon>menu</mat-icon>
   </button>
   <h1 class="example-app-name" (click)="toChat()">Messaging 2.0</h1>
-  <ul class="links" *ngIf="false else loggedOut"
+  <ul class="links" *ngIf="(authService.currentUser$ | async) else loggedOut"
       fxFlex="1 0 auto"
       fxLayout fxLayoutAlign="flex-end"
       fxLayoutGap="10px"
   >
     <li><a routerLink="/chat" routerLinkActive="active">Chat Rooms</a></li>
-    <li><a routerLink="/login" routerLinkActive="active">Logout</a></li>
+    <li><a (click)="authService.logout()">Logout</a></li>
   </ul>
 </mat-toolbar>
 
