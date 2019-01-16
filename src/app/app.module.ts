@@ -43,7 +43,7 @@ import {AngularFireAuthModule} from '@angular/fire/auth';
     RoutingModule,
     ReactiveFormsModule,
     MaterialModule,
-    AngularFireModule.initializeApp(environment.firbase),
+    AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireStorageModule,
     AngularFireAuthModule,

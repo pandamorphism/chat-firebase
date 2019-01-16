@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  firbase: {
+  firebase: {
     apiKey: 'AIzaSyAX5wy4nq77b2ZHe7d3G8pypU4UUowXlP0',
     authDomain: 'messaging-f9fff.firebaseapp.com',
     databaseURL: 'https://messaging-f9fff.firebaseio.com',
