@@ -1,11 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {dummyData} from './dummy-data';
 import {ActivatedRoute} from '@angular/router';
 import {Subscription} from 'rxjs';
 import {ChatroomService} from '../../../../shared/services/chatroom.service';
 import {filter, map, tap} from 'rxjs/operators';
 import {NOT_NULL} from '../../../../shared/misc/pure.utils';
 import {Chatroom} from '../../../../shared/model/chatroom';
+import {Message} from '../../../../shared/model/message';
 
 @Component({
   selector: 'app-chatroom-window',
@@ -13,7 +13,7 @@ import {Chatroom} from '../../../../shared/model/chatroom';
   styleUrls: ['./chatroom-window.component.scss']
 })
 export class ChatroomWindowComponent implements OnInit, OnDestroy {
-  dummyData = dummyData;
+  messages: Message[] = [];
   chatroom: Chatroom;
   private subscriptions: Subscription[] = [];
 
@@ -26,11 +26,15 @@ export class ChatroomWindowComponent implements OnInit, OnDestroy {
       map(param => param.get('id')),
       filter(NOT_NULL),
       tap(chatId => this.chatroomService.changeChatroom(chatId))
-    ).subscribe());
-    this.subscriptions.push(this.chatroomService.currentChatroom$.pipe(
-      tap(chatroom => this.chatroom = chatroom),
-    )
-      .subscribe());
+      ).subscribe(),
+      this.chatroomService.currentChatroom$.pipe(
+        tap(chatroom => this.chatroom = chatroom),
+      )
+        .subscribe(),
+      this.chatroomService.currentMessages$.pipe(
+        tap(messages => this.messages = messages)
+      )
+        .subscribe());
   }
 
   ngOnDestroy(): void {
