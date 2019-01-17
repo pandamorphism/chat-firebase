@@ -1,5 +1,11 @@
 <section class="chat-window" fxLayout="column">
-  <app-chatroom-title-bar fxFlex="1 0 5%" title="Cat Facts"></app-chatroom-title-bar>
+  <ng-container *ngIf="!chatroom else chatMessages">
+    <div class="info" fxFlexAlign="center">Please select a Movie to chat about</div>
+  </ng-container>
+</section>
+
+<ng-template #chatMessagess>
+  <app-chatroom-title-bar fxFlex="1 0 5%" [title]="chatroom.name"></app-chatroom-title-bar>
   <div class="messages-wrapper"
        fxFlex="1 1 80%"
        fxLayout="column"
@@ -15,4 +21,4 @@
 
   </div>
   <app-chat-input fxFlex="0 0 10%"></app-chat-input>
-</section>
+</ng-template>

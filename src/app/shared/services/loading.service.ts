@@ -6,16 +6,25 @@ import {Observable, Subject} from 'rxjs';
 })
 export class LoadingService {
   private loadingSubj$: Subject<boolean> = new Subject();
+  private counter = 0;
   loading$: Observable<boolean> = this.loadingSubj$.asObservable();
 
   constructor() {
   }
 
   start() {
-    this.loadingSubj$.next(true);
+    if (this.counter === 0) {
+      setTimeout(() => this.loadingSubj$.next(true));
+    }
+    console.log('INC');
+    this.counter++;
   }
 
   stop() {
-    this.loadingSubj$.next(false);
+    if (this.counter > 0) {
+      setTimeout(() => this.loadingSubj$.next(false));
+    }
+    console.log('DEC');
+    this.counter--;
   }
 }

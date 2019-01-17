@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {ChatroomService} from '../../../../shared/services/chatroom.service';
+import {Observable} from 'rxjs';
+import {Chatroom} from '../../../../shared/model/chatroom';
 
 @Component({
   selector: 'app-chatroom-list',
@@ -7,9 +10,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChatroomListComponent implements OnInit {
 
-  constructor() { }
+  constructor(private chatroomService: ChatroomService) { }
 
   ngOnInit() {
   }
 
+  get chatrooms$(): Observable<Chatroom[]> {
+    return this.chatroomService.chatrooms$;
+  }
 }

@@ -22,7 +22,11 @@ const routes: Routes = [
   {
     path: 'chat',
     component: ChatComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    children: [
+      {path: '', component: ChatComponent},
+      {path: ':id', component: ChatComponent},
+    ]
   },
   {
     path: '**',
@@ -33,7 +37,7 @@ const routes: Routes = [
 @NgModule({
   declarations: [],
   imports: [
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes, {enableTracing: false})
   ],
   exports: [RouterModule]
 })

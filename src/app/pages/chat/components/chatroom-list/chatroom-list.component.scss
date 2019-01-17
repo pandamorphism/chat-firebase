@@ -1,9 +1,24 @@
 .chatroom-list-wrapper {
+  & mat-icon {
+    position: relative;
+    top: 5px;
+    left: 5px;
+  }
+
+  & .title {
+
+    font-size: large;
+    text-align: center;
+    margin: 20px 0;
+  }
+
   & .chatroom-list-item {
+    padding: 0 0 10px 10px;
+    text-decoration: none;
     border-top: 1px solid lightgrey;
-    padding: 5px;
     background: whitesmoke;
   }
+
   border-right: 2px solid whitesmoke;
   height: 100%;
   overflow-y: auto;
