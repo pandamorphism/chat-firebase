@@ -38,7 +38,6 @@ export class ChatroomWindowComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.log('DESTROY');
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 

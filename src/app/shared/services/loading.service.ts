@@ -16,7 +16,6 @@ export class LoadingService {
     if (this.counter === 0) {
       setTimeout(() => this.loadingSubj$.next(true));
     }
-    console.log('INC');
     this.counter++;
   }
 
@@ -24,7 +23,6 @@ export class LoadingService {
     if (this.counter > 0) {
       setTimeout(() => this.loadingSubj$.next(false));
     }
-    console.log('DEC');
     this.counter--;
   }
 }

@@ -4,7 +4,7 @@
     <div fxLayout="column">
       <div>
         <span class="name">{{message.sender.firstName}} {{message.sender.lastName}}</span>
-        <span class="createdAt">{{message.createAt | date: 'medium'}}</span>
+        <span class="createdAt">{{message.createAt.seconds * 1000 | date: 'medium'}}</span>
       </div>
       <div>{{message.message}}</div>
     </div>

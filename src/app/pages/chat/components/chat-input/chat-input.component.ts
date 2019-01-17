@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {ChatroomService} from '../../../../shared/services/chatroom.service';
 
 @Component({
   selector: 'app-chat-input',
@@ -9,7 +10,8 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 export class ChatInputComponent implements OnInit {
   inputForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,
+              private chatroomService: ChatroomService) {
   }
 
   ngOnInit() {
@@ -19,7 +21,7 @@ export class ChatInputComponent implements OnInit {
   }
 
   submit() {
-    console.log('sending message: %O', this.inputForm.controls.messageInput.value);
+    this.chatroomService.createMessage(this.inputForm.controls.messageInput.value);
     this.inputForm.reset();
   }
 }

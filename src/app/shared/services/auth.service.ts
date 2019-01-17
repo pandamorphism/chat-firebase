@@ -25,10 +25,8 @@ export class AuthService {
         merge(
           // when user exists pipeline
           userExists$.pipe(
-            tap(user => console.log('userExists: %O', user)),
             switchMap(user => this.db.doc<User>(`users/${user.uid}`).valueChanges().pipe(
               tap(userDetails => {
-                console.log('Nexting user details');
                 this.currentUser$.next(userDetails);
               })
             ))

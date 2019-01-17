@@ -22,9 +22,8 @@ export class AuthGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    console.log('Can activate?');
     this.auth.currentUser$
-      .pipe(tap(user => console.log('USER IS %O', user)), take(1))
+      .pipe(take(1))
       .subscribe();
     return of(this.authInfo).pipe(
       mergeMap(([isAuthenticated$, notAuthenticated$]) => merge(
