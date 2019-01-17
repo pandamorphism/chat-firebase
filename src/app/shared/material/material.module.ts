@@ -8,6 +8,7 @@ import {
   MatToolbarModule,
   MatTooltipModule
 } from '@angular/material';
+import {ScrollingModule} from '@angular/cdk/scrolling';
 
 const usedMaterialModules = [
   MatFormFieldModule,
@@ -16,7 +17,8 @@ const usedMaterialModules = [
   MatIconModule,
   MatToolbarModule,
   MatSnackBarModule,
-  MatTooltipModule
+  MatTooltipModule,
+  ScrollingModule
 ];
 
 @NgModule({

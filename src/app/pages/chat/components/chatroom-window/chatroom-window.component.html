@@ -11,7 +11,7 @@
        fxLayout="column"
        fxLayoutAlign="flex-end"
        fxLayoutGap="10px">
-    <div class="scrollable">
+    <div class="scrollable" cdkScrollable>
       <ng-container *ngFor="let message of messages">
         <app-chatroom-message [message]="message">
 
