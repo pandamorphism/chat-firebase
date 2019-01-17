@@ -6,7 +6,6 @@ import {ChatroomService} from '../../../../shared/services/chatroom.service';
 import {filter, map, tap} from 'rxjs/operators';
 import {NOT_NULL} from '../../../../shared/misc/pure.utils';
 import {Chatroom} from '../../../../shared/model/chatroom';
-import {LoadingService} from '../../../../shared/services/loading.service';
 
 @Component({
   selector: 'app-chatroom-window',
@@ -19,8 +18,7 @@ export class ChatroomWindowComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
 
   constructor(private route: ActivatedRoute,
-              private chatroomService: ChatroomService,
-              private loadingService: LoadingService) {
+              private chatroomService: ChatroomService) {
   }
 
   ngOnInit() {
