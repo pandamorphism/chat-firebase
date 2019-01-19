@@ -30,7 +30,7 @@ export class AuthGuard implements CanActivate {
         isAuthenticated$.pipe(mapTo(true)),
         notAuthenticated$.pipe(
           mapTo(false),
-          tap(_ => this.alertService.error('Can`t access this route')),
+          // tap(_ => this.alertService.error('Can`t access this route')),
           tap(_ => this.router.navigate(['/login'], {queryParams: {returnUrl: state.url}})))
         ).pipe(take(1))
       ),

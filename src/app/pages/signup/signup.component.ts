@@ -1,11 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {AuthService} from '../shared/services/auth.service';
-import {AlertService} from '../shared/services/alert.service';
-import {LoadingService} from '../shared/services/loading.service';
+import {AuthService} from '../../shared/services/auth.service';
+import {AlertService} from '../../shared/services/alert.service';
+import {LoadingService} from '../../shared/services/loading.service';
 import {Subscription} from 'rxjs';
 import {filter, finalize, switchMap, tap} from 'rxjs/operators';
-import {IS_TRUE} from '../shared/misc/pure.utils';
+import {IS_TRUE} from '../../shared/misc/pure.utils';
 import {Router} from '@angular/router';
 
 @Component({

@@ -1,0 +1,19 @@
+:host {
+  display: flex;
+  justify-content: center;
+  & .form-wrapper {
+    & .title {
+      text-align: center;
+      margin-top: 10px;
+    }
+    & mat-form-field {
+      width: 350px;
+    }
+    & .navigate {
+      font-size: small;
+      margin: auto;
+    }
+  }
+
+}
+

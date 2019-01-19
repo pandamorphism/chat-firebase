@@ -4,13 +4,13 @@ import {NgModule} from '@angular/core';
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule} from '@angular/flex-layout';
-import {LoginComponent} from './login/login.component';
+import {LoginComponent} from './pages/login/login.component';
 import {RoutingModule} from './routing/routing.module';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MaterialModule} from './shared/material/material.module';
-import {SignupComponent} from './signup/signup.component';
+import {SignupComponent} from './pages/signup/signup.component';
 import {ChatComponent} from './pages/chat/chat.component';
-import {NavbarComponent} from './components/navbar/navbar.component';
+import {NavbarComponent} from './layout/navbar/navbar.component';
 import {ChatInputComponent} from './pages/chat/components/chat-input/chat-input.component';
 import {ChatroomListComponent} from './pages/chat/components/chatroom-list/chatroom-list.component';
 import {ChatroomTitleBarComponent} from './pages/chat/components/chatroom-title-bar/chatroom-title-bar.component';
@@ -24,6 +24,7 @@ import {AngularFireStorageModule} from '@angular/fire/storage';
 import {AngularFireAuthModule} from '@angular/fire/auth';
 import { ChatMessagesPageComponent } from './pages/chat/components/chat-messages-page/chat-messages-page.component';
 import { ChatWelcomePageComponent } from './pages/chat/components/chat-welcome-page/chat-welcome-page.component';
+import { ProfileComponent } from './pages/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { ChatWelcomePageComponent } from './pages/chat/components/chat-welcome-p
     ChatroomMessageComponent,
     ChatroomWindowComponent,
     ChatMessagesPageComponent,
-    ChatWelcomePageComponent
+    ChatWelcomePageComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

@@ -2,11 +2,11 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {of, Subscription} from 'rxjs';
-import {AlertService} from '../shared/services/alert.service';
+import {AlertService} from '../../shared/services/alert.service';
 import {catchError, filter, finalize, switchMap, tap} from 'rxjs/operators';
-import {LoadingService} from '../shared/services/loading.service';
-import {AuthService} from '../shared/services/auth.service';
-import {IS_TRUE} from '../shared/misc/pure.utils';
+import {LoadingService} from '../../shared/services/loading.service';
+import {AuthService} from '../../shared/services/auth.service';
+import {IS_TRUE} from '../../shared/misc/pure.utils';
 
 @Component({
   selector: 'app-login',

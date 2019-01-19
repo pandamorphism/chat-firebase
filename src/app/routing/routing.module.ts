@@ -1,17 +1,18 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {LoginComponent} from '../login/login.component';
-import {SignupComponent} from '../signup/signup.component';
+import {LoginComponent} from '../pages/login/login.component';
+import {SignupComponent} from '../pages/signup/signup.component';
 import {ChatComponent} from '../pages/chat/chat.component';
 import {AuthGuard} from '../shared/guards/auth.guard';
 import {ChatWelcomePageComponent} from '../pages/chat/components/chat-welcome-page/chat-welcome-page.component';
 import {ChatMessagesPageComponent} from '../pages/chat/components/chat-messages-page/chat-messages-page.component';
+import {ProfileComponent} from '../pages/profile/profile.component';
 
 const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: '/login'
+    redirectTo: '/chat'
   },
   {
     path: 'login',
@@ -20,6 +21,11 @@ const routes: Routes = [
   {
     path: 'signup',
     component: SignupComponent
+  },
+  {
+    path: 'profile',
+    canActivate: [AuthGuard],
+    component: ProfileComponent
   },
   {
     path: 'chat',
