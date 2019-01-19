@@ -2,11 +2,16 @@
   display: flex;
   flex-direction: column;
 }
+
 .messages-wrapper {
   & .scrollable {
     display: flex;
     flex-direction: column;
     overflow: auto;
+
+    &.scrolling::-webkit-scrollbar-thumb {
+      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+    }
   }
 }
 

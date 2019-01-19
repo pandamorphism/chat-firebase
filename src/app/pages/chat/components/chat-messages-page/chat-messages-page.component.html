@@ -2,10 +2,10 @@
 
 <div class="messages-wrapper"
      fxLayout="column"
-     fxFlex="1 1 75%"
+     fxFlex="0 3 auto"
      fxLayoutAlign="flex-end"
      fxLayoutGap="10px">
-  <div class="scrollable" cdkScrollable>
+  <div class="scrollable" [ngClass]="{scrolling: isScrolling|async}" cdkScrollable>
     <ng-container *ngFor="let message of messages">
       <app-chatroom-message [message]="message">
 
