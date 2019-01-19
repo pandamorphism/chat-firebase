@@ -20,13 +20,14 @@ const routes: Routes = [
     component: SignupComponent
   },
   {
+    path: 'chat/:id',
+    component: ChatComponent,
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'chat',
     component: ChatComponent,
     canActivate: [AuthGuard],
-    children: [
-      {path: '', component: ChatComponent},
-      {path: ':id', component: ChatComponent, pathMatch: 'full'},
-    ]
   },
   {
     path: '**',

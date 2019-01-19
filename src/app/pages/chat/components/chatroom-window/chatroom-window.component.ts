@@ -21,10 +21,9 @@ export class ChatroomWindowComponent implements OnInit, OnDestroy {
 
   constructor(private route: ActivatedRoute,
               private chatroomService: ChatroomService) {
-    this.subscriptions.push(merge(this.route.paramMap, this.route.firstChild.paramMap).pipe(
+    this.subscriptions.push(this.route.paramMap.pipe(
       map(param => param.get('id')),
       tap(id => console.log(`id: ${id}`)),
-      filter(NOT_NULL),
       tap(chatId => this.chatroomService.changeChatroom(chatId))
     ).subscribe());
   }

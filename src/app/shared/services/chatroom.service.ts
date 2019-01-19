@@ -1,12 +1,13 @@
 import {Injectable} from '@angular/core';
-import {Observable, ReplaySubject} from 'rxjs';
+import {ReplaySubject} from 'rxjs';
 import {Chatroom} from '../model/chatroom';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {LoadingService} from './loading.service';
-import {finalize, map, switchMap, take, tap, withLatestFrom} from 'rxjs/operators';
+import {filter, finalize, map, switchMap, take, tap, withLatestFrom} from 'rxjs/operators';
 import {Message} from '../model/message';
 import {AuthService} from './auth.service';
 import {User} from '../model/user';
+import {NOT_NULL} from '../misc/pure.utils';
 
 export type MessageToChatroom = {
   chatroom: Chatroom,
@@ -28,12 +29,12 @@ export class ChatroomService {
   chatrooms$ = this.db.collection<Chatroom>('chatrooms').valueChanges();
   currentChatroom$: ReplaySubject<Chatroom> = new ReplaySubject(1);
   currentMessages$: ReplaySubject<Message[]> = new ReplaySubject(1);
-  messsagesLive$: Observable<Message[]>;
 
   constructor(private db: AngularFirestore,
               private auth: AuthService,
               private loadingService: LoadingService) {
     this.currentChatroom$.pipe(
+      filter(NOT_NULL),
       switchMap(chatroom =>
         this.db.collection<Message>(`chatrooms/${chatroom.id}/messages`,
           ref => ref.orderBy('createAt', 'asc')).valueChanges()),
@@ -44,6 +45,7 @@ export class ChatroomService {
 
   changeChatroom(chatRoomId: any) {
     if (!chatRoomId) {
+      this.currentChatroom$.next(null);
       return;
     }
     this.loadingService.start();
