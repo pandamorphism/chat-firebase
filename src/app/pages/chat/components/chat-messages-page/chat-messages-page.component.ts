@@ -26,7 +26,7 @@ export class ChatMessagesPageComponent implements OnInit, OnDestroy, AfterViewIn
     this.subscriptions.push(this.route.paramMap.pipe(
       map(param => param.get('id')),
       tap(id => console.log(`id: ${id}`)),
-      tap(chatId => this.chatroomService.changeChatroom(chatId))
+      tap(chatId => this.chatroomService.switchChatroom(chatId))
     ).subscribe());
   }
 

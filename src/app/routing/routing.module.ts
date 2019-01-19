@@ -31,11 +31,6 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'chat',
-    component: ChatComponent,
-    canActivate: [AuthGuard],
-  },
-  {
     path: '**',
     redirectTo: '/login'
   }

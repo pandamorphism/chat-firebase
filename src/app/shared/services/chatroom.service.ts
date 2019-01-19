@@ -8,6 +8,7 @@ import {Message} from '../model/message';
 import {AuthService} from './auth.service';
 import {User} from '../model/user';
 import {NOT_NULL} from '../misc/pure.utils';
+import {tag} from 'rxjs-spy/operators';
 
 export type MessageToChatroom = {
   chatroom: Chatroom,
@@ -26,7 +27,7 @@ const toMessageForChatroom: (chatroom: Chatroom, user: User, message: string) =>
 })
 export class ChatroomService {
 
-  chatrooms$ = this.db.collection<Chatroom>('chatrooms').valueChanges();
+  chatrooms$ = this.db.collection<Chatroom>('chatrooms').valueChanges().pipe(tag('chatrooms'));
   currentChatroom$: ReplaySubject<Chatroom> = new ReplaySubject(1);
   currentMessages$: ReplaySubject<Message[]> = new ReplaySubject(1);
 
@@ -38,12 +39,16 @@ export class ChatroomService {
       switchMap(chatroom =>
         this.db.collection<Message>(`chatrooms/${chatroom.id}/messages`,
           ref => ref.orderBy('createAt', 'asc')).valueChanges()),
-      tap(messages => this.currentMessages$.next(messages))
+      tap(messages => this.currentMessages$.next(messages)),
     ).subscribe();
   }
 
-
-  changeChatroom(chatRoomId: any) {
+  /**
+   *
+   * @param chatRoomId
+   * switches chatroom to room with given id, and nexting messages for that room
+   */
+  switchChatroom(chatRoomId: any) {
     if (!chatRoomId) {
       this.currentChatroom$.next(null);
       return;
@@ -52,13 +57,13 @@ export class ChatroomService {
     this.db.doc<Chatroom>(`chatrooms/${chatRoomId}`).valueChanges()
       .pipe(
         tap(chatroom => this.currentChatroom$.next(chatroom)),
-        switchMap(chatroom => this.db.collection<Message>(`chatrooms/${chatroom.id}/messages`,
-          /*ref => ref.orderBy('createdAt', 'desc')*/)
+        switchMap(chatroom => this.db.collection<Message>(`chatrooms/${chatroom.id}/messages`)
           .valueChanges().pipe(map(messages =>
             messages.sort((a, b) => new Date(b.createAt).getTime() - new Date(a.createAt).getTime())))
         ),
         take(1),
         finalize(() => this.loadingService.stop()),
+        tag('messages')
       ).subscribe();
   }
 
@@ -68,7 +73,8 @@ export class ChatroomService {
         withLatestFrom(this.auth.currentUser$),
         map(([chatRoom, user]) => toMessageForChatroom(chatRoom, user, message)),
         tap(({chatroom, msg}) => this.db.collection(`chatrooms/${chatroom.id}/messages`).add(msg)),
-        take(1)
+        take(1),
+        tag('createMessage')
       )
       .subscribe();
   }
