@@ -1,24 +1,4 @@
 <section class="chat-window" fxLayout="column">
-  <ng-container *ngIf="!chatroom else chatMessages">
-    <div class="info" fxFlexAlign="center">Please select a Movie to chat about</div>
-  </ng-container>
+  <router-outlet></router-outlet>
 </section>
 
-<ng-template #chatMessages>
-  <app-chatroom-title-bar fxFlex="1 0 5%" [title]="chatroom.name"></app-chatroom-title-bar>
-  <div class="messages-wrapper"
-       fxFlex="1 1 80%"
-       fxLayout="column"
-       fxLayoutAlign="flex-end"
-       fxLayoutGap="10px">
-    <div class="scrollable" cdkScrollable>
-      <ng-container *ngFor="let message of messages">
-        <app-chatroom-message [message]="message">
-
-        </app-chatroom-message>
-      </ng-container>
-    </div>
-
-  </div>
-  <app-chat-input fxFlex="0 0 10%"></app-chat-input>
-</ng-template>

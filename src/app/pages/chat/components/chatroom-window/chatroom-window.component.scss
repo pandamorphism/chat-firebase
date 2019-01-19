@@ -1,18 +1,3 @@
 .chat-window {
-  height: calc(100vh - 64px);
-  max-height: 900px;
-  & .info {
-    margin: auto auto;
-    text-align: center;
-    font-size: 1.2em;
-    border: 2px solid lightgrey;
-    padding: 10px;
-  }
-  & .messages-wrapper {
-    & .scrollable {
-      display: flex;
-      flex-direction: column;
-      overflow: auto;
-    }
-  }
+  height: calc(100vh - 124px);
 }

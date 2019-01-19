@@ -22,6 +22,8 @@ import {environment} from '../environments/environment';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {AngularFireStorageModule} from '@angular/fire/storage';
 import {AngularFireAuthModule} from '@angular/fire/auth';
+import { ChatMessagesPageComponent } from './pages/chat/components/chat-messages-page/chat-messages-page.component';
+import { ChatWelcomePageComponent } from './pages/chat/components/chat-welcome-page/chat-welcome-page.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,9 @@ import {AngularFireAuthModule} from '@angular/fire/auth';
     ChatroomListComponent,
     ChatroomTitleBarComponent,
     ChatroomMessageComponent,
-    ChatroomWindowComponent
+    ChatroomWindowComponent,
+    ChatMessagesPageComponent,
+    ChatWelcomePageComponent
   ],
   imports: [
     BrowserModule,

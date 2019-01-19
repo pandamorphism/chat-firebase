@@ -1,0 +1,17 @@
+<app-chatroom-title-bar fxFlex="1 0 5%" [title]="chatroom?.name"></app-chatroom-title-bar>
+
+<div class="messages-wrapper"
+     fxLayout="column"
+     fxFlex="1 1 75%"
+     fxLayoutAlign="flex-end"
+     fxLayoutGap="10px">
+  <div class="scrollable" cdkScrollable>
+    <ng-container *ngFor="let message of messages">
+      <app-chatroom-message [message]="message">
+
+      </app-chatroom-message>
+    </ng-container>
+  </div>
+
+</div>
+<app-chat-input fxFlex="1 0 20%"></app-chat-input>
