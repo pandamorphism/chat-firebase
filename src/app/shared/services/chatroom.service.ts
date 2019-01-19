@@ -38,8 +38,11 @@ export class ChatroomService {
       filter(NOT_NULL),
       switchMap(chatroom =>
         this.db.collection<Message>(`chatrooms/${chatroom.id}/messages`,
-          ref => ref.orderBy('createAt', 'asc')).valueChanges()),
-      tap(messages => this.currentMessages$.next(messages)),
+          ref => ref.orderBy('createAt', 'desc').limit(15))
+          .valueChanges()
+      ),
+      tap(messages => this.currentMessages$.next(messages.reverse())),
+      tag('messages')
     ).subscribe();
   }
 
@@ -57,13 +60,8 @@ export class ChatroomService {
     this.db.doc<Chatroom>(`chatrooms/${chatRoomId}`).valueChanges()
       .pipe(
         tap(chatroom => this.currentChatroom$.next(chatroom)),
-        switchMap(chatroom => this.db.collection<Message>(`chatrooms/${chatroom.id}/messages`)
-          .valueChanges().pipe(map(messages =>
-            messages.sort((a, b) => new Date(b.createAt).getTime() - new Date(a.createAt).getTime())))
-        ),
         take(1),
         finalize(() => this.loadingService.stop()),
-        tag('messages')
       ).subscribe();
   }
 
