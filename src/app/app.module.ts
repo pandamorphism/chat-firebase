@@ -25,6 +25,7 @@ import {AngularFireAuthModule} from '@angular/fire/auth';
 import { ChatMessagesPageComponent } from './pages/chat/components/chat-messages-page/chat-messages-page.component';
 import { ChatWelcomePageComponent } from './pages/chat/components/chat-welcome-page/chat-welcome-page.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { EditProfileComponent } from './pages/edit-profile/edit-profile.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { ProfileComponent } from './pages/profile/profile.component';
     ChatroomWindowComponent,
     ChatMessagesPageComponent,
     ChatWelcomePageComponent,
-    ProfileComponent
+    ProfileComponent,
+    EditProfileComponent
   ],
   imports: [
     BrowserModule,

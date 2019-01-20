@@ -1,0 +1,24 @@
+<form fxLayout="column" fxLayoutAlign="center" fxLayoutGap="10px"
+      [formGroup]="profileForm"
+      (ngSubmit)="submit()"
+      novalidate>
+  <mat-form-field hintLabel="Please, enter your first name">
+    <input type="text" matInput formControlName="firstName">
+    <mat-error *ngIf="profileForm.controls.firstName.hasError('required')">Field must not be empty</mat-error>
+  </mat-form-field>
+  <mat-form-field hintLabel="Please, enter your last name">
+    <input type="text" matInput formControlName="lastName">
+    <mat-error *ngIf="profileForm.controls.lastName.hasError('required')">Field must not be empty</mat-error>
+  </mat-form-field>
+  <mat-form-field hintLabel="Your status, please">
+    <input type="text" matInput formControlName="quote">
+  </mat-form-field>
+  <button
+    type="submit"
+    mat-raised-button
+    color="primary"
+    [disabled]="profileForm.invalid"
+  >
+    Save
+  </button>
+</form>

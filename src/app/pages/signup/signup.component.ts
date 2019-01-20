@@ -5,8 +5,9 @@ import {AlertService} from '../../shared/services/alert.service';
 import {LoadingService} from '../../shared/services/loading.service';
 import {Subscription} from 'rxjs';
 import {filter, finalize, switchMap, tap} from 'rxjs/operators';
-import {IS_TRUE} from '../../shared/misc/pure.utils';
+import {IS_TRUE, NOT_NULL} from '../../shared/misc/pure.utils';
 import {Router} from '@angular/router';
+import {untilDestroyed} from 'ngx-take-until-destroy';
 
 @Component({
   selector: 'app-signup',
@@ -26,6 +27,7 @@ export class SignupComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.auth.currentUser$.pipe(filter(NOT_NULL), tap(_ => this.router.navigateByUrl('/chat')), untilDestroyed(this)).subscribe();
     this.createForm();
   }
 
@@ -39,12 +41,7 @@ export class SignupComponent implements OnInit, OnDestroy {
   }
 
   submit() {
-    this.loadingService.start();
     this.subscriptions.push(this.auth.signup(this.signupForm.value).pipe(
-      filter(IS_TRUE),
-      switchMap(_ => this.auth.currentUser$.pipe(filter(user => !!user))),
-      tap(_ => this.router.navigate(['/chat'])),
-      finalize(() => this.loadingService.stop()),
     ).subscribe());
   }
 

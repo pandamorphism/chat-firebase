@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {filter, map, switchMap, tap} from 'rxjs/operators';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {tag} from 'rxjs-spy/operators';
 import {NOT_EMPTY} from '../../shared/misc/pure.utils';
 import {UserService} from '../../shared/services/user.service';
@@ -16,12 +16,13 @@ import {AuthService} from '../../shared/services/auth.service';
 })
 export class ProfileComponent implements OnInit, OnDestroy {
   profileForm: FormGroup;
-  private user$: Observable<User>;
+  user$: Observable<User>;
   private isCurrentUserProfile$: Observable<boolean>;
 
   constructor(private fb: FormBuilder,
               private authService: AuthService,
               private route: ActivatedRoute,
+              private router: Router,
               private userService: UserService) {
     this.user$ = this.route.paramMap.pipe(
       map(params => params.get('profileId')),
@@ -35,22 +36,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // this.profileForm = this.fb.group({
-    //   firstName: ['', [Validators.required]],
-    //   lastName: ['', [Validators.required]],
-    //   quote: [''],
-    // });
-    // this.auth.currentUser$.pipe(
-    //   tap(({firstName, lastName, quote}) => this.profileForm.setValue({firstName, lastName, quote})),
-    //   take(1)
-    // ).subscribe();
-  }
-
-
-  submit() {
-    console.log('update profile: %O', this.profileForm.value);
   }
 
   ngOnDestroy(): void {
+  }
+
+  navigateEditProfile(id: string) {
+    this.router.navigate(['profile', id, 'edit']);
   }
 }

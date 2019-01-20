@@ -7,6 +7,7 @@ import {AuthGuard} from '../shared/guards/auth.guard';
 import {ChatWelcomePageComponent} from '../pages/chat/components/chat-welcome-page/chat-welcome-page.component';
 import {ChatMessagesPageComponent} from '../pages/chat/components/chat-messages-page/chat-messages-page.component';
 import {ProfileComponent} from '../pages/profile/profile.component';
+import {EditProfileComponent} from '../pages/edit-profile/edit-profile.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,11 @@ const routes: Routes = [
     path: 'profile/:profileId',
     canActivate: [AuthGuard],
     component: ProfileComponent
+  },
+  {
+    path: 'profile/:profileId/edit',
+    canActivate: [AuthGuard],
+    component: EditProfileComponent
   },
   {
     path: 'chat',

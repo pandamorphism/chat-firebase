@@ -3,10 +3,11 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {of, Subscription} from 'rxjs';
 import {AlertService} from '../../shared/services/alert.service';
-import {catchError, filter, finalize, switchMap, tap} from 'rxjs/operators';
+import {catchError, filter, tap} from 'rxjs/operators';
 import {LoadingService} from '../../shared/services/loading.service';
 import {AuthService} from '../../shared/services/auth.service';
-import {IS_TRUE} from '../../shared/misc/pure.utils';
+import {NOT_NULL} from '../../shared/misc/pure.utils';
+import {untilDestroyed} from 'ngx-take-until-destroy';
 
 @Component({
   selector: 'app-login',
@@ -29,6 +30,12 @@ export class LoginComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.createForm();
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/chat';
+    this.auth.currentUser$.pipe(
+      filter(NOT_NULL),
+      tap(_ => this.router.navigateByUrl('/chat')),
+      untilDestroyed(this)
+    )
+      .subscribe();
   }
 
   createForm() {
@@ -46,12 +53,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         console.error(err);
         return of(false);
       }),
-      filter(IS_TRUE),
-      switchMap(_ => this.auth.currentUser$),
-      filter(user => !!user),
       tap(_ => this.alertService.success('You`ve been logged in successfully.')),
-      tap(_ => this.router.navigate(['/chat'])),
-      finalize(() => this.loadingService.stop())
     ).subscribe());
   }
 
