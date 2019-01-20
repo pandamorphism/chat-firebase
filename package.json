@@ -27,6 +27,7 @@
     "core-js": "^2.5.4",
     "firebase": "^5.7.3",
     "ngx-loading": "^3.0.1",
+    "ngx-take-until-destroy": "^5.4.0",
     "rxjs": "~6.3.3",
     "rxjs-etc": "^9.4.0",
     "rxjs-spy": "^7.5.0",

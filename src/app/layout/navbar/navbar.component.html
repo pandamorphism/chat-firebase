@@ -3,13 +3,13 @@
     <mat-icon>menu</mat-icon>
   </button>
   <h1 class="example-app-name" (click)="toChat()">Messaging 2.0</h1>
-  <div class="links" *ngIf="(authService.currentUser$ | async) else loggedOut"
+  <div class="links" *ngIf="(authService.currentUser$ | async) as user else loggedOut"
       fxFlex="1 0 auto"
       fxLayout fxLayoutAlign="flex-end"
       fxLayoutGap="10px"
   >
     <div><a routerLink="/chat" routerLinkActive="active">Chat Rooms</a></div>
-    <div><a routerLink="/profile" routerLinkActive="active" class="profile_link">
+    <div><a [routerLink]="['/profile', user.uid]" routerLinkActive="active" class="profile_link">
       <img src="{{(authService.currentUser$ | async)?.photoURL }}">
     </a></div>
     <div class="logout" matTooltip="Log out"

@@ -3,7 +3,8 @@
     <div class="avatar"><img src="{{message.sender.photoURL}}"/></div>
     <div fxLayout="column">
       <div>
-        <span class="name">{{message.sender.firstName}} {{message.sender.lastName}}</span>
+        <span class="name"><a
+          [routerLink]="['/profile', message.sender.uid]">{{message.sender.firstName}} {{message.sender.lastName}}</a></span>
         <span class="createdAt">{{message.createAt.seconds * 1000 | date: 'medium'}}</span>
       </div>
       <div>{{message.message}}</div>

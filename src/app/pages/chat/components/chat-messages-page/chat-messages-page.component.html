@@ -1,8 +1,8 @@
-<app-chatroom-title-bar fxFlex="1 0 5%" [title]="chatroom?.name"></app-chatroom-title-bar>
+<app-chatroom-title-bar fxFlex="0 0 auto" [title]="chatroom?.name"></app-chatroom-title-bar>
 
 <div class="messages-wrapper"
      fxLayout="column"
-     fxFlex="0 3 auto"
+     fxFlex="1 1 80vh"
      fxLayoutAlign="flex-end"
      fxLayoutGap="10px">
   <div class="scrollable" [ngClass]="{scrolling: isScrolling|async}" cdkScrollable>
@@ -14,4 +14,4 @@
   </div>
 
 </div>
-<app-chat-input fxFlex="1 0 20%"></app-chat-input>
+<app-chat-input fxFlex="1 0 5vh"></app-chat-input>

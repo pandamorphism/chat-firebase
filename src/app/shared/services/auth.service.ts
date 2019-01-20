@@ -43,7 +43,8 @@ export class AuthService {
     return fromPromise(this.fireAuth.auth.createUserWithEmailAndPassword(email, password)
       .then(userCredentials => {
           const userUpdate = {
-            id: userCredentials.user.uid, firstName, lastName,
+            uid: userCredentials.user.uid, firstName, lastName,
+            quote: '',
             // tslint:disable-next-line
             photoURL: 'https://firebasestorage.googleapis.com/v0/b/messaging-f9fff.appspot.com/o/default_profile_pic.jpg?alt=media&token=bd02001d-304e-40c1-bb9c-3d807fcac8fd'
           };

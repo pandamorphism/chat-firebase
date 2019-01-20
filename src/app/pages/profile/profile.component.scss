@@ -1,18 +1,46 @@
+//:host {
+//  display: flex;
+//  justify-content: center;
+//  & .form-wrapper {
+//    & .title {
+//      text-align: center;
+//      margin-top: 10px;
+//    }
+//    & mat-form-field {
+//      width: 350px;
+//    }
+//    & .navigate {
+//      font-size: small;
+//      margin: auto;
+//    }
+//  }
+//
+//}
+// TODO: profile edit
+
 :host {
   display: flex;
   justify-content: center;
-  & .form-wrapper {
-    & .title {
-      text-align: center;
-      margin-top: 10px;
+
+  & .avatar {
+    width: 200px;
+    height: 200px;
+    border-radius: 100px;
+    overflow: hidden;
+    & img {
+      object-fit: cover;
+      width: 100%;
     }
-    & mat-form-field {
-      width: 350px;
-    }
-    & .navigate {
-      font-size: small;
-      margin: auto;
-    }
+  }
+
+  & .fio {
+    text-align: center;
+    font-weight: 200;
+  }
+
+  & .quote {
+    text-align: center;
+    font-weight: 500;
   }
 
 }
