@@ -1,22 +1,27 @@
-.chatroom-list-wrapper {
+.side-block {
   & mat-icon {
     position: relative;
     top: 5px;
     left: 5px;
   }
 
+  & .rooms {
+    & .chatroom-list-item {
+      display: inline-block;
+      width: 100%;
+      padding: 0 0 10px 10px;
+      text-decoration: none;
+      border-top: 1px solid lightgrey;
+      background: whitesmoke;
+    }
+  }
+
+
   & .title {
 
     font-size: large;
     text-align: center;
     margin: 20px 0;
-  }
-
-  & .chatroom-list-item {
-    padding: 0 0 10px 10px;
-    text-decoration: none;
-    border-top: 1px solid lightgrey;
-    background: whitesmoke;
   }
 
   border-right: 2px solid whitesmoke;

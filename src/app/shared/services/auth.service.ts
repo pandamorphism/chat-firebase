@@ -55,19 +55,18 @@ export class AuthService {
             // tslint:disable-next-line
             photoURL: 'https://firebasestorage.googleapis.com/v0/b/messaging-f9fff.appspot.com/o/default_profile_pic.jpg?alt=media&token=bd02001d-304e-40c1-bb9c-3d807fcac8fd'
           };
-          this.db.doc<User>(`users/${userCredentials.user.uid}`).set(userUpdate);
-          // assign newly created user to default channel
-          this.chatroomService.getDefaultChatrooms$()
-            .pipe(
-              tap(rooms => console.log('roomsD: %O', rooms)),
-              filter(NOT_EMPTY),
-              map(rooms => rooms[0]),
-              tap(room =>
-                this.db.doc<{ [id: string]: boolean }>(`chatrooms/${room.id}`).update({[`participants.${userUpdate.uid}`]: true})
-              ),
-              take(1),
-              tag('defaultRoom')
-            ).subscribe();
+          this.db.doc<User>(`users/${userCredentials.user.uid}`).set(userUpdate)
+            .then(_ =>
+              // assign newly created user to default channel
+              this.chatroomService.getDefaultChatrooms$()
+                .pipe(
+                  take(1),
+                  tap(rooms => console.log('roomsD: %O', rooms)),
+                  filter(NOT_EMPTY),
+                  map(rooms => rooms[0]),
+                  switchMap(room => this.chatroomService.addToChatroom(room.id, userUpdate)),
+                  tag('defaultRoom')
+                ).subscribe());
         }
       )
       .catch(err => {

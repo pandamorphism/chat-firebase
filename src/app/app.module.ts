@@ -26,6 +26,7 @@ import { ChatMessagesPageComponent } from './pages/chat/components/chat-messages
 import { ChatWelcomePageComponent } from './pages/chat/components/chat-welcome-page/chat-welcome-page.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { EditProfileComponent } from './pages/edit-profile/edit-profile.component';
+import { RoomParticipantsComponent } from './pages/chat/components/room-participants/room-participants.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { EditProfileComponent } from './pages/edit-profile/edit-profile.componen
     ChatMessagesPageComponent,
     ChatWelcomePageComponent,
     ProfileComponent,
-    EditProfileComponent
+    EditProfileComponent,
+    RoomParticipantsComponent
   ],
   imports: [
     BrowserModule,

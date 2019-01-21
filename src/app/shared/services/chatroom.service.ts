@@ -8,6 +8,7 @@ import {Message} from '../model/message';
 import {User} from '../model/user';
 import {NOT_NULL} from '../misc/pure.utils';
 import {tag} from 'rxjs-spy/operators';
+import {fromPromise} from 'rxjs/internal-compatibility';
 
 export type MessageToChatroom = {
   chatroom: Chatroom,
@@ -25,11 +26,11 @@ const toMessageForChatroom: (chatroom: Chatroom, user: User, message: string) =>
   providedIn: 'root'
 })
 export class ChatroomService {
-
-  chatrooms$ = this.db.collection<Chatroom>('chatrooms').valueChanges().pipe(tag('chatrooms'));
   currentChatroom$: ReplaySubject<Chatroom> = new ReplaySubject(1);
   currentMessages$: ReplaySubject<Message[]> = new ReplaySubject(1);
   private defaultChatrooms$: Observable<Chatroom[]>;
+
+  // private userChatrooms$: Observable<Chatroom[]>;
 
   constructor(private db: AngularFirestore,
               private loadingService: LoadingService) {
@@ -44,11 +45,16 @@ export class ChatroomService {
       tag('messages')
     ).subscribe();
     this.defaultChatrooms$ = this.db.collection<Chatroom>('chatrooms', ref => ref.where('isDefault', '==', true))
-      .valueChanges().pipe(shareReplay(1));
+      .valueChanges().pipe(tap(rooms => console.log('DEFAUULT: %O', rooms)), shareReplay(1), tag('defaultChatroomsSource'));
   }
 
+  /**
+   *
+   * @param userId
+   * return list of chatrooms whre current userId is participant
+   */
   getChatroomsByUserId(userId: string): Observable<Chatroom[]> {
-    return this.defaultChatrooms$ = this.db.collection<Chatroom>('chatrooms', ref => ref.where(`participants.${userId}`, '==', true))
+    return this.db.collection<Chatroom>('chatrooms', ref => ref.where(`participants.${userId}`, '==', true))
       .valueChanges().pipe(tap(rooms => console.log('rooms for %O are: %O', userId, rooms)), shareReplay(1));
   }
 
@@ -69,6 +75,16 @@ export class ChatroomService {
         take(1),
         finalize(() => this.loadingService.stop()),
       ).subscribe();
+  }
+
+  getChatroomParticipants(chatroomId): Observable<User[]> {
+    return this.db.collection<User>(`chatrooms/${chatroomId}/participantsList`).valueChanges();
+  }
+
+  addToChatroom(chatroomId, user: User) {
+    console.log('addTOChatroom: %O user: %O', chatroomId, user);
+    return fromPromise(this.db.doc<{ [id: string]: boolean }>(`chatrooms/${chatroomId}`).update({[`participants.${user.uid}`]: true})
+      .then(_ => this.db.collection(`chatrooms/${chatroomId}/participantsList`).add(user)));
   }
 
   createMessage(message: string, user: User) {

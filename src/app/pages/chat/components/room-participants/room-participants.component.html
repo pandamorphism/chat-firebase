@@ -1,0 +1,3 @@
+<div *ngFor="let participant of roomParticipants$ | async">
+  <a [routerLink]="['/profile', participant.uid]">{{participant.firstName}} {{participant.lastName}}</a>
+</div>

@@ -17,7 +17,7 @@ import {tag} from 'rxjs-spy/operators';
 export class ChatroomListComponent implements OnInit, OnDestroy {
 
   chatrooms$: Observable<Chatroom[]>;
-
+  // todo: refactor to make this component dumb
   constructor(private chatroomService: ChatroomService,
               private auth: AuthService) {
   }

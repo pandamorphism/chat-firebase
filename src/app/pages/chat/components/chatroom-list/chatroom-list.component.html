@@ -1,15 +1,18 @@
 <div fxLayout="column"
      fxLayoutAlign="flex-start"
      fxLayoutGap="10px"
-     class="chatroom-list-wrapper">
+     class="side-block">
   <div class="title">
     <span>Movies</span>
     <mat-icon>movie</mat-icon>
   </div>
-  <ng-container *ngFor="let chatRoom of chatrooms$ | async">
-    <a [routerLink]="['/chat', chatRoom.id]" class="chatroom-list-item">
+  <div class="rooms">
+    <a *ngFor="let chatRoom of chatrooms$ | async" [routerLink]="['/chat', chatRoom.id]" class="chatroom-list-item">
       <span>{{chatRoom.name}}</span>
       <mat-icon>chat</mat-icon>
     </a>
-  </ng-container>
+  </div>
+  <div class="participants">
+    <app-room-participants></app-room-participants>
+  </div>
 </div>
