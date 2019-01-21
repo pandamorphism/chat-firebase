@@ -1,11 +1,10 @@
 import {Injectable} from '@angular/core';
-import {ReplaySubject} from 'rxjs';
+import {Observable, ReplaySubject} from 'rxjs';
 import {Chatroom} from '../model/chatroom';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {LoadingService} from './loading.service';
-import {filter, finalize, map, switchMap, take, tap, withLatestFrom} from 'rxjs/operators';
+import {filter, finalize, map, shareReplay, switchMap, take, tap} from 'rxjs/operators';
 import {Message} from '../model/message';
-import {AuthService} from './auth.service';
 import {User} from '../model/user';
 import {NOT_NULL} from '../misc/pure.utils';
 import {tag} from 'rxjs-spy/operators';
@@ -30,9 +29,9 @@ export class ChatroomService {
   chatrooms$ = this.db.collection<Chatroom>('chatrooms').valueChanges().pipe(tag('chatrooms'));
   currentChatroom$: ReplaySubject<Chatroom> = new ReplaySubject(1);
   currentMessages$: ReplaySubject<Message[]> = new ReplaySubject(1);
+  private defaultChatrooms$: Observable<Chatroom[]>;
 
   constructor(private db: AngularFirestore,
-              private auth: AuthService,
               private loadingService: LoadingService) {
     this.currentChatroom$.pipe(
       filter(NOT_NULL),
@@ -44,6 +43,13 @@ export class ChatroomService {
       tap(messages => this.currentMessages$.next(messages.reverse())),
       tag('messages')
     ).subscribe();
+    this.defaultChatrooms$ = this.db.collection<Chatroom>('chatrooms', ref => ref.where('isDefault', '==', true))
+      .valueChanges().pipe(shareReplay(1));
+  }
+
+  getChatroomsByUserId(userId: string): Observable<Chatroom[]> {
+    return this.defaultChatrooms$ = this.db.collection<Chatroom>('chatrooms', ref => ref.where(`participants.${userId}`, '==', true))
+      .valueChanges().pipe(tap(rooms => console.log('rooms for %O are: %O', userId, rooms)), shareReplay(1));
   }
 
   /**
@@ -65,16 +71,19 @@ export class ChatroomService {
       ).subscribe();
   }
 
-  createMessage(message: string) {
+  createMessage(message: string, user: User) {
     this.currentChatroom$
       .pipe(
-        withLatestFrom(this.auth.currentUser$),
-        map(([chatRoom, user]) => toMessageForChatroom(chatRoom, user, message)),
+        map(chatRoom => toMessageForChatroom(chatRoom, user, message)),
         tap(({chatroom, msg}) => this.db.collection(`chatrooms/${chatroom.id}/messages`).add(msg)),
         take(1),
         tag('createMessage')
       )
       .subscribe();
+  }
+
+  getDefaultChatrooms$(): Observable<Chatroom[]> {
+    return this.defaultChatrooms$;
   }
 
 }

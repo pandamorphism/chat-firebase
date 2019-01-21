@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-import {of, Subscription} from 'rxjs';
+import {Subscription, throwError} from 'rxjs';
 import {AlertService} from '../../shared/services/alert.service';
 import {catchError, filter, tap} from 'rxjs/operators';
 import {LoadingService} from '../../shared/services/loading.service';
@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       catchError(err => {
         this.alertService.error(err.message);
         console.error(err);
-        return of(false);
+        return throwError(err);
       }),
       tap(_ => this.alertService.success('You`ve been logged in successfully.')),
     ).subscribe());
