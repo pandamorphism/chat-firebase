@@ -7,6 +7,9 @@
 
   & .rooms {
     & .chatroom-list-item {
+      &.active:before {
+        content: '✔️';
+      }
       display: inline-block;
       width: 100%;
       padding: 0 0 10px 10px;

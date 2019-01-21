@@ -7,7 +7,10 @@
     <mat-icon>movie</mat-icon>
   </div>
   <div class="rooms">
-    <a *ngFor="let chatRoom of chatrooms$ | async" [routerLink]="['/chat', chatRoom.id]" class="chatroom-list-item">
+    <a *ngFor="let chatRoom of chatrooms$ | async"
+       [routerLink]="['/chat', chatRoom.id]"
+       routerLinkActive="active"
+       class="chatroom-list-item">
       <span>{{chatRoom.name}}</span>
       <mat-icon>chat</mat-icon>
     </a>

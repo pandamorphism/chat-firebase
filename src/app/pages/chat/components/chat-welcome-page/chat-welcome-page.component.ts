@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {ChatroomService} from '../../../../shared/services/chatroom.service';
 
 @Component({
   selector: 'app-chat-welcome-page',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChatWelcomePageComponent implements OnInit {
 
-  constructor() { }
+  constructor(private chatroomService: ChatroomService) { }
 
   ngOnInit() {
+    this.chatroomService.switchChatroom(null);
   }
 
 }

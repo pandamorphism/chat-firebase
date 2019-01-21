@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ChatroomService} from '../../../../shared/services/chatroom.service';
-import {switchMap} from 'rxjs/operators';
-import {Observable} from 'rxjs';
+import {delay, switchMap} from 'rxjs/operators';
+import {Observable, of} from 'rxjs';
 import {User} from '../../../../shared/model/user';
 
 @Component({
@@ -19,7 +19,8 @@ export class RoomParticipantsComponent implements OnInit {
 
   ngOnInit() {
     this.roomParticipants$ = this.chatroomService.currentChatroom$.pipe(
-      switchMap(selectedRoom => this.chatroomService.getChatroomParticipants(selectedRoom.id))
+      delay(0), // expression changed after it was checked
+      switchMap(selectedRoom => selectedRoom && this.chatroomService.getChatroomParticipants(selectedRoom.id) || of([]))
     );
   }
 

@@ -6,6 +6,7 @@ import {interval, Subject, Subscription} from 'rxjs';
 import {delay, distinctUntilChanged, filter, map, switchMap, take, tap, throttleTime} from 'rxjs/operators';
 import {ActivatedRoute} from '@angular/router';
 import {ChatroomService} from '../../../../shared/services/chatroom.service';
+import {untilDestroyed} from 'ngx-take-until-destroy';
 
 @Component({
   selector: 'app-chat-messages-page',
@@ -23,11 +24,11 @@ export class ChatMessagesPageComponent implements OnInit, OnDestroy, AfterViewIn
   constructor(private route: ActivatedRoute,
               private chatroomService: ChatroomService,
               private cd: ChangeDetectorRef) {
-    this.subscriptions.push(this.route.paramMap.pipe(
+    this.route.paramMap.pipe(
       map(param => param.get('id')),
-      tap(id => console.log(`id: ${id}`)),
-      tap(chatId => this.chatroomService.switchChatroom(chatId))
-    ).subscribe());
+      tap(chatId => this.chatroomService.switchChatroom(chatId)),
+      untilDestroyed(this)
+    ).subscribe();
   }
 
   ngOnInit() {

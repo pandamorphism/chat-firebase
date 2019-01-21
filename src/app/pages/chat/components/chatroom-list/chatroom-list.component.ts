@@ -27,7 +27,7 @@ export class ChatroomListComponent implements OnInit, OnDestroy {
       filter(NOT_NULL),
       switchMap((user: User) => this.chatroomService.getChatroomsByUserId(user.uid)),
       untilDestroyed(this),
-      tag('chatrooms for user')
+      tag('chatrooms_for_user')
     );
   }
 
