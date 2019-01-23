@@ -108,10 +108,12 @@ export class ChatroomService {
    * @param invitedPerson - person, beeing invited
    */
   createRoomFor(roomAdmin: User, invitedPerson: User): Observable<string> {
-    return fromPromise(this.db.collection<NewChatroom>(`chatrooms/`).add({name: 'Private room', participants: {
+    return fromPromise(this.db.collection<NewChatroom>(`chatrooms/`).add({
+      name: `${roomAdmin.firstName}, ${invitedPerson.firstName}`, participants: {
         [roomAdmin.uid]: true,
         [invitedPerson.uid]: true
-      }})
+      }
+    })
       .then(roomRef => {
         roomRef.update('id', roomRef.id);
         roomRef.collection('participantsList').add(roomAdmin);
