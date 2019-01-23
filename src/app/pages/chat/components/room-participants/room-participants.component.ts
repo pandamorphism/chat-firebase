@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {ChatroomService} from '../../../../shared/services/chatroom.service';
-import {delay, switchMap} from 'rxjs/operators';
+import {delay, switchMap, tap} from 'rxjs/operators';
 import {Observable, of} from 'rxjs';
 import {User} from '../../../../shared/model/user';
+import {tag} from 'rxjs-spy/operators';
 
 @Component({
   selector: 'app-room-participants',
@@ -20,7 +21,9 @@ export class RoomParticipantsComponent implements OnInit {
   ngOnInit() {
     this.roomParticipants$ = this.chatroomService.currentChatroom$.pipe(
       delay(0), // expression changed after it was checked
-      switchMap(selectedRoom => selectedRoom && this.chatroomService.getChatroomParticipants(selectedRoom.id) || of([]))
+      tap(selectedRoom => console.log('retrieving participants for: %O', selectedRoom)),
+      switchMap(selectedRoom => selectedRoom && this.chatroomService.getChatroomParticipants(selectedRoom.id) || of([])),
+      tag('roomParticipants')
     );
   }
 

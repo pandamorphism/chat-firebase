@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder} from '@angular/forms';
-import {filter, map, shareReplay, switchMap} from 'rxjs/operators';
+import {exhaustMap, filter, map, shareReplay, switchMap, take, tap} from 'rxjs/operators';
 import {ActivatedRoute, Router} from '@angular/router';
 import {tag} from 'rxjs-spy/operators';
 import {NOT_EMPTY} from '../../shared/misc/pure.utils';
@@ -9,6 +9,7 @@ import {combineLatest, Observable} from 'rxjs';
 import {User} from '../../shared/model/user';
 import {AuthService} from '../../shared/services/auth.service';
 import {untilDestroyed} from 'ngx-take-until-destroy';
+import {ChatroomService} from '../../shared/services/chatroom.service';
 
 @Component({
   selector: 'app-profile',
@@ -21,6 +22,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   constructor(private fb: FormBuilder,
               private authService: AuthService,
+              private chatroomService: ChatroomService,
               private route: ActivatedRoute,
               private router: Router,
               private userService: UserService) {
@@ -44,5 +46,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   navigateEditProfile(id: string) {
     this.router.navigate(['profile', id, 'edit']);
+  }
+
+  inviteToDirectChat(invitedUser: User) {
+    this.authService.currentUser$.pipe(
+      exhaustMap(currentUser => this.chatroomService.createRoomFor(currentUser, invitedUser)),
+      tap(roomId => this.router.navigate(['/chat', roomId])),
+      take(1)).subscribe();
   }
 }

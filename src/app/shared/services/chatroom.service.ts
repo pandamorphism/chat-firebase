@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable, ReplaySubject} from 'rxjs';
-import {Chatroom} from '../model/chatroom';
-import {AngularFirestore} from '@angular/fire/firestore';
+import {Chatroom, NewChatroom} from '../model/chatroom';
+import {AngularFirestore, DocumentReference} from '@angular/fire/firestore';
 import {LoadingService} from './loading.service';
 import {filter, finalize, map, shareReplay, switchMap, take, tap} from 'rxjs/operators';
 import {Message} from '../model/message';
@@ -64,6 +64,7 @@ export class ChatroomService {
    * switches chatroom to room with given id, and nexting messages for that room
    */
   switchChatroom(chatRoomId: any) {
+    console.log('switching to %O', chatRoomId);
     if (!chatRoomId) {
       this.currentChatroom$.next(null);
       return;
@@ -81,7 +82,7 @@ export class ChatroomService {
     return this.db.collection<User>(`chatrooms/${chatroomId}/participantsList`).valueChanges();
   }
 
-  addToChatroom(chatroomId, user: User) {
+  addToChatroom(chatroomId, user: User): Observable<DocumentReference> {
     console.log('addTOChatroom: %O user: %O', chatroomId, user);
     return fromPromise(this.db.doc<{ [id: string]: boolean }>(`chatrooms/${chatroomId}`).update({[`participants.${user.uid}`]: true})
       .then(_ => this.db.collection(`chatrooms/${chatroomId}/participantsList`).add(user)));
@@ -102,4 +103,20 @@ export class ChatroomService {
     return this.defaultChatrooms$;
   }
 
+  /**
+   * @param roomAdmin - person, who invites
+   * @param invitedPerson - person, beeing invited
+   */
+  createRoomFor(roomAdmin: User, invitedPerson: User): Observable<string> {
+    return fromPromise(this.db.collection<NewChatroom>(`chatrooms/`).add({name: 'Private room', participants: {
+        [roomAdmin.uid]: true,
+        [invitedPerson.uid]: true
+      }})
+      .then(roomRef => {
+        roomRef.update('id', roomRef.id);
+        roomRef.collection('participantsList').add(roomAdmin);
+        roomRef.collection('participantsList').add(invitedPerson);
+        return roomRef.id;
+      }));
+  }
 }
