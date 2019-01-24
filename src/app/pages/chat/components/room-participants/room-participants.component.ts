@@ -4,6 +4,7 @@ import {delay, switchMap, tap} from 'rxjs/operators';
 import {Observable, of} from 'rxjs';
 import {User} from '../../../../shared/model/user';
 import {tag} from 'rxjs-spy/operators';
+import {AuthService} from '../../../../shared/services/auth.service';
 
 @Component({
   selector: 'app-room-participants',
@@ -15,7 +16,8 @@ export class RoomParticipantsComponent implements OnInit {
   roomParticipants$: Observable<User[]>;
 
   // todo: refactor to make this component dumb
-  constructor(private chatroomService: ChatroomService) {
+  constructor(private chatroomService: ChatroomService,
+              public auth: AuthService) {
   }
 
   ngOnInit() {

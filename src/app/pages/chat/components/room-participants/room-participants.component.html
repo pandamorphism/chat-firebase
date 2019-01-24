@@ -1,3 +1,4 @@
 <div *ngFor="let participant of roomParticipants$ | async">
   <a [routerLink]="['/profile', participant.uid]">{{participant.firstName}} {{participant.lastName}}</a>
+  <strong *ngIf="participant.uid === (auth.currentUser$ | async).uid"> (you)</strong>
 </div>
