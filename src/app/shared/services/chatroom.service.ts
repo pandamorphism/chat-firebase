@@ -30,8 +30,6 @@ export class ChatroomService {
   currentMessages$: ReplaySubject<Message[]> = new ReplaySubject(1);
   private defaultChatrooms$: Observable<Chatroom[]>;
 
-  // private userChatrooms$: Observable<Chatroom[]>;
-
   constructor(private db: AngularFirestore,
               private loadingService: LoadingService) {
     this.currentChatroom$.pipe(
@@ -115,7 +113,6 @@ export class ChatroomService {
       }
     })
       .then(roomRef => {
-        roomRef.update('id', roomRef.id);
         roomRef.collection('participantsList').add(roomAdmin);
         roomRef.collection('participantsList').add(invitedPerson);
         return roomRef.id;
